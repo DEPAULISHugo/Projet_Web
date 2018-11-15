@@ -1,4 +1,7 @@
 <?php
+
+$_SESSION['id'] = 1;
+
 if (isset($_SESSION['id']) && !(empty($_SESSION['id']))){
   $link = pg_connect("port=5432 dbname=postgis_24_sample user=postgres password=postgres");
   echo "<p>Connexion établie</p>";
