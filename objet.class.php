@@ -16,6 +16,10 @@
       $this->minZoom = $minZoom;
       $this->icone = $icone;
     }
+
+    public function toString(){
+      return '{"id":'.$this->id.', "name":"'.$this->name.'" ,"latitude":'.$this->lat.' ,"longitude":'.$this->lng.' ,"minZoom":'.$this->minZoom.' ,"icone":"'.$this->icone.'"}';
+    }
 }
 
 /*$objet = new Objet(1, "nom", 50.123, 45.987, 5, "icone.png");
