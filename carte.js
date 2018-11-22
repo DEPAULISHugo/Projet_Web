@@ -5,46 +5,44 @@ var end = 0
 var diff = 0
 var timerID = 0
 
-window.onload = chronoStart;
+window.onload = t;
+var duree = 900;
 
-function chrono(){
-	end = new Date()
-	diff = end - start
-	diff = new Date(diff)
-	var msec = diff.getMilliseconds()
-	var sec = diff.getSeconds()
-	var min = diff.getMinutes()
-	var hr = diff.getHours()-1
-	if (min < 10){
-		min = "0" + min
-	}
-	if (sec < 10){
-		sec = "0" + sec
-	}
-	if(msec < 10){
-		msec = "00" +msec
-	}
-	else if(msec < 100){
-		msec = "0" +msec
-	}
-	document.getElementById("chrono").value = hr + ":" + min + ":" + sec + ":" + msec
-	timerID = setTimeout("chrono()", 10)
+function t(){
+  var secondes = duree;
+  var minutes = 0;
+  var delai = 0;
+
+  if(secondes <0){
+
+  }
+  else{
+    if(secondes > 59){
+      minutes = Math.floor(secondes / 60);
+      secondes = secondes - minutes * 60;
+      console.log(minutes);
+    }
+    if(secondes < 10){
+      secondes = "0" + secondes;
+    }
+    if(minutes < 10){
+      minutes = "0" + minutes;
+    }
+    document.getElementById('compteur').value = minutes + ":" + secondes;
+  }
+  duree = duree - 1;
+  delai = window.setTimeout("t()",999);
 }
 
 function chronoStart(){
-	start = new Date()
+	duree = 900;
 	chrono()
 }
 
 function redirection(){
   var confirmation = confirm('Voulez-vous abandonner la partie en cours ?')
-  if (confirmation){ //S'il décide de quitter la partie ..
-    document.location.href='acceuil.html' //Le joueur est renvoyé vers la page d'acceuil
-  }
-  else { //S'il veut reprendre la partie
-    start = new Date()-diff
-    start = new Date(start)
-    chrono() //Le chrono repart où il s'était arrété
+  if (confirmation){
+    document.location.href='acceuil.html'
   }
 }
 

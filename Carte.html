@@ -15,7 +15,7 @@
   <body>
 
     <form name="chrono">
-      <input type="text" name="chrono" id="chrono" value="00:00:00"/>
+      <input type="text" name="chrono" id="compteur" value="00:00:00"/>
       <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
     </form>
 
@@ -30,7 +30,7 @@
 
     <div id="macarte"></div>
     <script>
-      var carte = L.map('macarte').setView([16.15, -61.5], 10);
+      var carte = L.map('macarte').setView([16.165, -61.5], 10);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
