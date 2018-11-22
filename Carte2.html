@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+
+    <link rel="stylesheet" href="Carte.css">
+    <script src="carte.js" charset="utf-8"></script>
+
+    <title>Mission papillon</title>
+  </head>
+
+  <body>
+
+    <form name="chrono">
+      <input type="text" name="chrono" id="chrono" value="00:00:00"/>
+      <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
+    </form>
+
+    <div class="barre">
+      <div class="progression">
+        <div class="valeur">
+            Ajouter la valeur de la progression
+        </div>
+      </div>
+    </div>
+
+
+    <div id="macarte"></div>
+    <script>
+      var carte = L.map('macarte').setView([16.15, -61.5], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 1,
+        attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(carte);
+
+      /* DEBUT MODIFICATION */
+
+      var listLayers = [];
+
+      for (var i = 0 ; i < 19 ; i++){
+        listLayers[i] = new L.LayerGroup();
+        carte.addLayer(listLayers[i]);
+      }
+
+      var listObjets = [];
+
+      function getObjetByID(id){
+        var ajax = new XMLHttpRequest();
+        ajax.open('GET', 'serveur.php/?id='+id);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.addEventListener('load',  function () {
+          var objet = JSON.parse(ajax.response);
+          listObjets[listObjets.length] = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
+          console.log(objet);
+        });
+        ajax.send("id="+id);
+      }
+
+      class Objet {
+        constructor (id, name, lat, lng, minZoom, icone, texte) {
+          this.id = id;
+          this.name = name;
+          this.lat = lat;
+          this.lng = lng;
+          this.minZoom = minZoom;
+          this.icone = icone;
+          this.texte = texte;
+          this.iconMap = L.icon({
+            iconUrl: this.icone,
+            shadowUrl: 'shadow.png',
+
+            iconSize:     [50, 50], // size of the icon
+            shadowSize:   [50, 50], // size of the shadow
+            iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
+            shadowAnchor: [25, 25],  // the same for the shadow
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+          });
+        this.marker = L.marker([this.lat, this.lng], {icon: this.iconMap});
+        }
+        afficherObjet(){
+          this.marker.addTo(listLayers[this.minZoom - 1]);
+          this.marker.bindPopup(this.texte);
+        }
+        retirerObjet(){
+          listLayers[this.minZoom - 1].removeLayer(this.marker);
+        }
+      }
+
+      carte.on('zoomend', function() {
+        for (var i = 0 ; i < 19 ; i++){
+          if (carte.getZoom() > i){
+              carte.addLayer(listLayers[i]);
+            }
+            else {
+              carte.removeLayer(listLayers[i]);
+            }
+        }
+      });
+
+      /* FIN MODIFICATION */
+
+    </script>
+
+    <div id="audio">
+      <audio id="son" autoplay loop preload="auto">
+        <source src="Lava Laboratory - Roblox Escape Room Music.mp3" type="audio/mp3" />
+      </audio>
+
+      <input type="range" min="0" max="1" step="0.1" value="1" id="Volume" onchange="changeVolume()">
+    </div>
+
+    <div>
+      <div class="rangement" id="boite1"></div>
+      <div class="rangement" id="boite2"></div>
+      <div class="rangement" id="boite3"></div>
+      <div class="rangement" id="boite4"></div>
+      <div class="rangement" id="boite5"></div>
+      <div class="rangement" id="boite6"></div>
+      <div class="rangement" id="boite7"></div>
+    </div>
+
+
+  </body>
+
+</html>

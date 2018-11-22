@@ -7,18 +7,20 @@
     public $lng;
     public $minZoom;
     public $icone;
+    public $texte;
 
-    public function __construct($id,  $name, $lat, $lng, $minZoom, $icone){
+    public function __construct($id,  $name, $lat, $lng, $minZoom, $icone, $texte){
       $this->id = $id;
       $this->name = $name;
       $this->lat = $lat;
       $this->lng = $lng;
       $this->minZoom = $minZoom;
       $this->icone = $icone;
+      $this->texte = $texte;
     }
 
     public function toString(){
-      return '{"id":'.$this->id.', "name":"'.$this->name.'" ,"latitude":'.$this->lat.' ,"longitude":'.$this->lng.' ,"minZoom":'.$this->minZoom.' ,"icone":"'.$this->icone.'"}';
+      return '{"id":'.$this->id.', "name":"'.$this->name.'" ,"latitude":'.$this->lat.' ,"longitude":'.$this->lng.' ,"minZoom":'.$this->minZoom.' ,"icone":"'.$this->icone.'" ,"texte":"'.$this->texte.'"}';
     }
 }
 

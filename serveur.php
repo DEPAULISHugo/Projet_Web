@@ -3,7 +3,7 @@
 include("objet.class.php");
 
 function getObjetFromDB($id) {
-  $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
+  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
   /*if(!$link){
     die("Erreur de connexion");
   }else{
@@ -14,7 +14,7 @@ function getObjetFromDB($id) {
   if ($result) {
     /*echo "<p>Requête réussie</p>";*/
     while ($row = pg_fetch_row($result)) {
-      $objet = new Objet ($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+      $objet = new Objet ($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);
     }
   }/*else{
     echo "<p>Requête echouée</p>";
