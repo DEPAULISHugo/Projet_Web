@@ -1,0 +1,94 @@
+body{
+  background-image: url(canalisation.jpg);
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#macarte {
+  width: 90%;
+  height: 500px;
+  display: block;
+  margin-top: 65px;
+  margin-left: auto;
+  margin-right: auto
+}
+
+#Volume {
+  width: 10%;
+  position: fixed;
+  top: 20px;
+  right: 100px;
+  background-color: white;
+  border:3px inset orange;
+}
+
+.rangement {
+  display: inline-block;
+  width: 8%;
+  height: 90px;
+  border-style: inset;
+  border-color: orange;
+  border-width: 5px;
+  padding: 1% 1%;
+  margin: 1%;
+  background-color: white;
+}
+
+#boite1 {
+  margin-left: 6%;
+}
+
+#chrono {
+  width: 10%;
+  height: 3%;
+  border-radius: 20px;
+  font-family: "Trebuchet MS";
+  color: orange;
+  font-weight: bold;
+  font-size: 1em;
+  border-style: inset;
+  border-width: 4px;
+  border-color: orange;
+  text-align: center;
+  background-color: white;
+  position: fixed;
+  left: 5px;
+  top: 15px;
+}
+
+#stop {
+  width:50px;
+  height: 50px;
+  text-decoration: none;
+  padding: 1% 1%;
+  background-image: url(stop.png);
+  background-size: cover;
+  border-radius: 100%;
+  position: fixed;
+  top: 15px;
+  right: 10px;
+}
+
+.barre {
+  width:20%;
+  height: 20px;
+  padding:2px;
+  background-color:white;
+  border:3px inset orange;
+  text-align:center;
+  position: fixed;
+  top: 15px;
+  left: 40%;
+}
+
+.progression {
+  width:100px;
+  height: 20px;
+  background-color:orange;
+}
+
+.valeur {
+  color: white;
+  padding: 4px;
+}
