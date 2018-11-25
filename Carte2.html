@@ -15,7 +15,7 @@
   <body>
 
     <form name="chrono">
-      <input type="text" name="chrono" id="chrono" value="00:00:00"/>
+      <input type="text" name="chrono" id="compteur" value="00:00:00"/>
       <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
     </form>
 
@@ -30,10 +30,9 @@
 
     <div id="macarte"></div>
     <script>
-      var carte = L.map('macarte').setView([16.15, -61.5], 10);
+      var carte = L.map('macarte').setView([16.165, -61.5], 10);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        minZoom: 1,
         attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(carte);
 
@@ -69,6 +68,7 @@
           this.minZoom = minZoom;
           this.icone = icone;
           this.texte = texte;
+          this.vu = false;
           this.iconMap = L.icon({
             iconUrl: this.icone,
             shadowUrl: 'shadow.png',
@@ -82,11 +82,13 @@
         this.marker = L.marker([this.lat, this.lng], {icon: this.iconMap});
         }
         afficherObjet(){
-          this.marker.addTo(listLayers[this.minZoom - 1]);
-          this.marker.bindPopup(this.texte);
+          this.marker.addTo(listLayers[this.minZoom - 1]).on("click", markerOnClick);
         }
         retirerObjet(){
           listLayers[this.minZoom - 1].removeLayer(this.marker);
+        }
+        getIdObjetBloquant(){
+          
         }
       }
 
@@ -100,6 +102,23 @@
             }
         }
       });
+
+      function markerOnClick(e) {
+        var clickedMarker = e.target;
+        clickedMarker.bindPopup("some content").openPopup();
+        var objet = getObjetByMarker(clickedMarker);
+        if (objet.vu == false){
+          objet.vu = true;
+        }
+      }
+
+      function getObjetByMarker(marker){
+        for (var i = 0 ; i < listObjets.length ; i++) {
+          if (listObjets[i].lat == marker._latlng.lat && listObjets[i].lng == marker._latlng.lng){
+            return listObjets[i];
+          }
+        }
+      }
 
       /* FIN MODIFICATION */
 
