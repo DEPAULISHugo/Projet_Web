@@ -46,6 +46,7 @@
       }
 
       var listObjets = [];
+      var listObjetsPossedes = [];
 
       function getObjetByID(id){
         var ajax = new XMLHttpRequest();
@@ -70,6 +71,8 @@
           this.minZoom = minZoom;
           this.icone = icone;
           this.texte = texte;
+          this.vu = false;
+          this.bloquePar = null;
           this.iconMap = L.icon({
             iconUrl: this.icone,
             shadowUrl: 'shadow.png',
@@ -88,6 +91,10 @@
         retirerObjet(){
           listLayers[this.minZoom - 1].removeLayer(this.marker);
         }
+        recupererObjet(){
+          this.retirerObjet();
+          listObjetsPossedes[listObjetsPossedes.length] = this;
+        }
         action() {
           /*Recherche d'un objet bloquant*/
           var ajax = new XMLHttpRequest();
@@ -97,10 +104,13 @@
             console.log(ajax.response);
             if (ajax.response) {
               var objet = JSON.parse(ajax.response);
-              var newObjet = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
-              listObjets[listObjets.length] = newObjet;
+              var objetBloquant = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
+              console.log(objetBloquant.id);
+              this.bloquePar = objetBloquant.id;
+              console.log("Bloqué par :" + this.bloquePar);
+              listObjets[listObjets.length] = objetBloquant;
               console.log(objet);
-              newObjet.afficherObjet();
+              objetBloquant.afficherObjet();
             }else{
               console.log("L'objet n'est pas bloqué.")
             }
@@ -124,8 +134,16 @@
       function markerOnClick(e) {
         var clickedMarker = e.target;
         var objet = getObjetByMarker(clickedMarker);
-        clickedMarker.bindPopup(objet.texte).openPopup();
-        objet.action();
+        if (objet.vu == false) {
+          objet.vu = true;
+          clickedMarker.bindPopup(objet.texte).openPopup();
+          objet.action();
+        }
+        else{
+          if (objet.bloque == null){
+            objet.recupererObjet();
+          }
+        }
       }
 
       function getObjetByMarker(marker){
