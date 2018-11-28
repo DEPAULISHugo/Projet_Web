@@ -1,12 +1,7 @@
 //Chrono
-var startTime = 0
-var start = 0
-var end = 0
-var diff = 0
-var timerID = 0
 
 window.onload = t;
-var duree = 900;
+var duree = 5;
 
 function t(){
   var secondes = duree;
@@ -14,7 +9,8 @@ function t(){
   var delai = 0;
 
   if(secondes <0){
-
+    alert("Le temps imparti est écoulé.")
+    document.location.href='acceuil.html'
   }
   else{
     if(secondes > 59){
@@ -31,13 +27,8 @@ function t(){
     document.getElementById('compteur').value = minutes + ":" + secondes;
   }
   duree = duree - 1;
-  delai = window.setTimeout("t()",999);
 }
-
-function chronoStart(){
-	duree = 900;
-	chrono()
-}
+delai = window.setInterval("t()",1000);
 
 function redirection(){
   var confirmation = confirm('Voulez-vous abandonner la partie en cours ?')

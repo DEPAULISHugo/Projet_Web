@@ -14,13 +14,19 @@ body{
   margin-right: auto
 }
 
-#Volume {
+#audio {
   width: 10%;
+  height: 20px;
   position: fixed;
   top: 20px;
   right: 100px;
   background-color: white;
   border:3px inset orange;
+}
+
+#volume {
+  width: 95%;
+  margin-top: 3%;
 }
 
 .rangement {

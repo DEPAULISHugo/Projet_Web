@@ -10,8 +10,14 @@
   <input class="boutons" id="bouton-retour" type=button onclick=window.location.href='acceuil.html'; value=Retour />
 
   <p>
-    Ici on mettra des indications pour comprendre le jeu :
-    par exemple comment débloquer les objets bloqués etc
+
+    <input type="range" min="0" max="1" step="0.1" value="1" id="volume" onchange="changeVolume()">
+    Cette barre vous permettre de regler le volume du son pendant la partie
+    <br>
+    <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
+    Ce bouton vous permet de quitter la partie
+    <br>
+
   </p>
 
   <input class="boutons" id="bouton-jouer" type=button onclick=window.location.href='carte.html'; value=Jouer />
