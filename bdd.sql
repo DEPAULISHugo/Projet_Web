@@ -36,11 +36,6 @@ CREATE TABLE public.objets (
     texte character varying(250)
 );
 
-CREATE TABLE public.lienObjets (
-    idBloque integer NOT NULL,
-    idBloquant integer NOT NULL
-);
-
 
 ALTER TABLE public.objets OWNER TO postgres;
 
@@ -51,11 +46,8 @@ ALTER TABLE public.objets OWNER TO postgres;
 --
 
 INSERT INTO public.objets (id, nom, latitude, longitude, zoom, icone, texte) VALUES (0, 'coffre', 16.2542438, -61.5709074, 15, 'coffre.png', 'Bravo, mais il te manque une clé pour ouvrir ce coffre !');
-INSERT INTO public.objets (id, nom, latitude, longitude, zoom, icone, texte) VALUES (1, 'clé', 15.9679245, -61.6448145, 17, 'clé.png', 'Bravo, tu as trouvé la clé ! Utilise là pour ouvrir le coffre');
+INSERT INTO public.objets (id, nom, latitude, longitude, zoom, icone, texte) VALUES (1, 'clé', 15.9268611, -61.6533417, 17, 'clé.png', 'Bravo, tu as trouvé la clé ! Utilise là pour ouvrir le coffre');
 
-ALTER TABLE public.lienObjets OWNER TO postgres;
-
-INSERT INTO public.lienObjets (idBloque, idBloquant) VALUES (0, 1);
 
 --
 -- TOC entry 3000 (class 2606 OID 16399)
