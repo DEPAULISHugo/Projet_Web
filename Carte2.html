@@ -72,7 +72,8 @@
           this.icone = icone;
           this.texte = texte;
           this.vu = false;
-          this.bloquePar = null;
+          this.idBloquant = null;
+          this.texteDebloque = null;
           this.iconMap = L.icon({
             iconUrl: this.icone,
             shadowUrl: 'shadow.png',
@@ -101,20 +102,15 @@
           ajax.open('GET', 'serveur.php/?idBloque='+this.id);
           ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
           ajax.addEventListener('load',  function () {
-            console.log(ajax.response);
-            if (ajax.response) {
-              var objet = JSON.parse(ajax.response);
-              var objetBloquant = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
-              console.log(objetBloquant.id);
-              this.bloquePar = objetBloquant.id;
-              console.log("Bloqué par :" + this.bloquePar);
-              listObjets[listObjets.length] = objetBloquant;
-              console.log(objet);
-              objetBloquant.afficherObjet();
+            var lienObjet = JSON.parse(ajax.response);
+            if (lienObjet.idBloquant != -1) {
+              listObjets[lienObjet.idBloque].idBloquant = lienObjet.idBloquant;
+              listObjets[lienObjet.idBloque].texteDebloque = lienObjet.texteDebloque;
+              getObjetByID(lienObjet.idBloquant);
+              listObjets[listObjets.length - 1].afficherObjet();
             }else{
-              console.log("L'objet n'est pas bloqué.")
+              alert("Objet non bloqué");
             }
-
           });
           ajax.send("idBloque="+this.id);
         }
@@ -140,7 +136,7 @@
           objet.action();
         }
         else{
-          if (objet.bloque == null){
+          if (objet.idBloquant == null){
             objet.recupererObjet();
           }
         }

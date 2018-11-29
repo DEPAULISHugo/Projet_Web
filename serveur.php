@@ -1,6 +1,8 @@
 <?php
 
 include("objet.class.php");
+include("lienObjet.class.php");
+
 
 function getObjetFromDB($id) {
   $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
