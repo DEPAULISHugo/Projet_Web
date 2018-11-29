@@ -95,6 +95,8 @@
         recupererObjet(){
           this.retirerObjet();
           listObjetsPossedes[listObjetsPossedes.length] = this;
+          var cadre = document.getElementById("boite"+listObjetsPossedes.length);
+          cadre.innerHTML = '<img src="'+this.icone+'" class=imageObjets alt="Oups !">';
         }
         action() {
           /*Recherche d'un objet bloquant*/
@@ -109,7 +111,6 @@
               getObjetByID(lienObjet.idBloquant);
               listObjets[listObjets.length - 1].afficherObjet();
             }else{
-              alert("Objet non bloqué");
             }
           });
           ajax.send("idBloque="+this.id);
@@ -165,13 +166,13 @@
     </div>
 
     <div>
-      <div class="rangement" id="boite1"></div>
-      <div class="rangement" id="boite2"></div>
-      <div class="rangement" id="boite3"></div>
-      <div class="rangement" id="boite4"></div>
-      <div class="rangement" id="boite5"></div>
-      <div class="rangement" id="boite6"></div>
-      <div class="rangement" id="boite7"></div>
+      <div class="rangement" id="boite1"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite2"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite3"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite4"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite5"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite6"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
+      <div class="rangement" id="boite7"><img src="shadow.png" class=imageObjets alt="Oups !"></div>
     </div>
 
 
