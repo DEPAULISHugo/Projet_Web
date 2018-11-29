@@ -1,5 +1,4 @@
 //Chrono
-window.onload = t;
 var duree = 900;
 
 function t(){
@@ -42,3 +41,13 @@ function changeVolume() {
 
 	audio.volume = audioVolume.value;
 }
+
+//Evolution de la barre de progression
+function increment(progres) {
+  var evolution = document.getElementsByClassName('progression');
+  var largeur = evolution[0].clientWidth;
+  var new_largeur = largeur + progres;
+  evolution[0].style.width = String(new_largeur) + "%";
+  console.log(evolution[0].clientWidth);
+};
+increment(15);
