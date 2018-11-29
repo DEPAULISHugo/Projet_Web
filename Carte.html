@@ -14,9 +14,18 @@
 
   <body>
 
+    <div id="macarte"></div>
+    <script>
+      var carte = L.map('macarte').setView([16.165, -61.5], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(carte);
+    </script>
+
     <form name="chrono">
       <input type="text" name="chrono" id="compteur" value="00:00:00"/>
-      <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
+      <input id="stop" type=button onclick="redirection()"; value="" />
     </form>
 
     <div class="barre">
@@ -26,16 +35,6 @@
         </div>
       </div>
     </div>
-
-
-    <div id="macarte"></div>
-    <script>
-      var carte = L.map('macarte').setView([16.165, -61.5], 10);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(carte);
-    </script>
 
     <div id="audio">
       <audio id="son" autoplay loop preload="auto">
@@ -54,7 +53,6 @@
       <div class="rangement" id="boite6"></div>
       <div class="rangement" id="boite7"></div>
     </div>
-
 
   </body>
 

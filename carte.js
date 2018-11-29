@@ -1,7 +1,6 @@
 //Chrono
-
 window.onload = t;
-var duree = 5;
+var duree = 900;
 
 function t(){
   var secondes = duree;
@@ -16,7 +15,6 @@ function t(){
     if(secondes > 59){
       minutes = Math.floor(secondes / 60);
       secondes = secondes - minutes * 60;
-      console.log(minutes);
     }
     if(secondes < 10){
       secondes = "0" + secondes;
@@ -37,7 +35,7 @@ function redirection(){
   }
 }
 
-//Gestion du volume de la musique de fond
+//Reglage du volume de la musique de fond
 function changeVolume() {
 	var audio = document.getElementById("son");
 	var audioVolume = document.getElementById("Volume");

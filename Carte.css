@@ -31,18 +31,24 @@ body{
 
 .rangement {
   display: inline-block;
-  width: 8%;
-  height: 90px;
+  width: 7%;
   border-style: inset;
   border-color: orange;
   border-width: 5px;
   padding: 1% 1%;
   margin: 1%;
   background-color: white;
+  float: left;
+}
+
+.rangement:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 #boite1 {
-  margin-left: 6%;
+  margin-left: 10%;
 }
 
 #compteur {
@@ -89,7 +95,7 @@ body{
 }
 
 .progression {
-  width:100px;
+  width: 150px;
   height: 20px;
   background-color:orange;
 }
