@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -58,7 +58,8 @@ ALTER TABLE public.classement OWNER TO postgres;
 
 CREATE TABLE public.lienobjets (
     idbloque integer NOT NULL,
-    idbloquant integer NOT NULL
+    idbloquant integer NOT NULL,
+    textedebloque character varying(250)
 );
 
 
@@ -99,7 +100,7 @@ INSERT INTO public.classement (identifiant, temps) VALUES ('numberthree', '00:13
 -- Data for Name: lienobjets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.lienobjets (idbloque, idbloquant) VALUES (0, 1);
+INSERT INTO public.lienobjets (idbloque, idbloquant, textedebloque) VALUES (0, 1, 'Bravo ! Tu as ouvert le coffre.');
 
 
 --

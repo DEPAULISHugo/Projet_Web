@@ -93,6 +93,7 @@
           listLayers[this.minZoom - 1].removeLayer(this.marker);
         }
         recupererObjet(){
+          alert(listObjetsPossedes.length);
           this.retirerObjet();
           listObjetsPossedes[listObjetsPossedes.length] = this;
           var cadre = document.getElementById("boite"+listObjetsPossedes.length);
@@ -114,8 +115,7 @@
                   id = i;
                 }
               }
-              var ancienCadre = document.getElementById("boite"+(i+1));
-              alert("boite"+(i+1));
+              var ancienCadre = document.getElementById("boite"+(id+1));
               ancienCadre.style.backgroundColor = "white";
               objetUtilise = idObjet;
               this.style.backgroundColor = "grey";
@@ -124,6 +124,7 @@
           });
         }
         debloquerObjet(clickedMarker){
+          alert("Objet debloque");
           this.idBloquant = null;
           clickedMarker.bindPopup(this.texteDebloque).openPopup();
         }
