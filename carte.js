@@ -37,7 +37,7 @@ function redirection(){
 //Reglage du volume de la musique de fond
 function changeVolume() {
 	var audio = document.getElementById("son");
-	var audioVolume = document.getElementById("Volume");
+	var audioVolume = document.getElementById("volume");
 
 	audio.volume = audioVolume.value;
 }
