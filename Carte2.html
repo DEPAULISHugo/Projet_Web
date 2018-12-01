@@ -41,7 +41,7 @@
 
       for (var i = 0 ; i < 19 ; i++){
         listLayers[i] = new L.LayerGroup();
-        carte.addLayer(listLayers[i]);
+        /*carte.addLayer(listLayers[i]);*/
       }
 
       var listObjets = [];
@@ -82,18 +82,20 @@
             shadowSize:   [50, 50], // size of the shadow
             iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
             shadowAnchor: [25, 25],  // the same for the shadow
-            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
           });
         this.marker = L.marker([this.lat, this.lng], {icon: this.iconMap});
         }
         afficherObjet(){
+          this.marker.bindPopup(this.texte);
           this.marker.addTo(listLayers[this.minZoom - 1]).on("click", markerOnClick);
+          this.marker.on("mouseover", markerMouseOver);
+          this.marker.on("mouseout", markerMouseOut);
         }
         retirerObjet(){
           listLayers[this.minZoom - 1].removeLayer(this.marker);
         }
         recupererObjet(){
-          alert(listObjetsPossedes.length);
           this.retirerObjet();
           listObjetsPossedes[listObjetsPossedes.length] = this;
           var cadre = document.getElementById("boite"+listObjetsPossedes.length);
@@ -124,9 +126,8 @@
           });
         }
         debloquerObjet(clickedMarker){
-          alert("Objet debloque");
           this.idBloquant = null;
-          clickedMarker.bindPopup(this.texteDebloque).openPopup();
+          clickedMarker.bindPopup(this.texteDebloque);
         }
         action() {
           /*Recherche d'un objet bloquant*/
@@ -159,21 +160,34 @@
       });
 
       function markerOnClick(e) {
+        alert("markerOnClick");
         var clickedMarker = e.target;
         var objet = getObjetByMarker(clickedMarker);
+        alert(clickedMarker.id);
+        if (objet.idBloquant == null){
+          alert("1 : recupererObjet");
+          objet.recupererObjet();
+        }
+        else if (objet.idBloquant == objetUtilise){
+          alert("2 : debloquerObjet")
+          objet.debloquerObjet(clickedMarker);
+        }
+      }
+
+      function markerMouseOver(e) {
+        var clickedMarker = e.target;
+        var objet = getObjetByMarker(clickedMarker);
+        clickedMarker.openPopup();
         if (objet.vu == false) {
           objet.vu = true;
-          clickedMarker.bindPopup(objet.texte).openPopup();
           objet.action();
         }
-        else{
-          if (objet.idBloquant == null){
-            objet.recupererObjet();
-          }
-          else if (objet.idBloquant == objetUtilise){
-            objet.debloquerObjet(clickedMarker);
-          }
-        }
+      }
+
+      function markerMouseOut(e) {
+        var clickedMarker = e.target;
+        var objet = getObjetByMarker(clickedMarker);
+        clickedMarker.closePopup();
       }
 
       function getObjetByMarker(marker){
