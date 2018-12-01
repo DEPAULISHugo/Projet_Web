@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+markerOnClick
   <head>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
@@ -56,7 +57,6 @@
           var objet = JSON.parse(ajax.response);
           var newObjet = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
           listObjets[listObjets.length] = newObjet;
-          console.log(objet);
           newObjet.afficherObjet();
         });
         ajax.send("id="+id);
@@ -111,23 +111,19 @@
               this.style.backgroundColor = "white";
             }
             else{
-              var id;
-              for (var i = 0 ; i < listObjetsPossedes.length ; i++){
-                if (objetUtilise == listObjetsPossedes[i].id){
-                  id = i;
-                }
-              }
-              var ancienCadre = document.getElementById("boite"+(id+1));
+              var ancienCadre = getCadreObjetUtilise();
               ancienCadre.style.backgroundColor = "white";
               objetUtilise = idObjet;
               this.style.backgroundColor = "grey";
             }
-
           });
         }
         debloquerObjet(clickedMarker){
           this.idBloquant = null;
-          clickedMarker.bindPopup(this.texteDebloque);
+          clickedMarker.bindPopup(this.texteDebloque).openPopup();
+          var cadreObjetUtilise = getCadreObjetUtilise();
+          cadreObjetUtilise.style.backgroundColor = "white";
+          objetUtilise = null;
         }
         action() {
           /*Recherche d'un objet bloquant*/
@@ -140,7 +136,6 @@
               listObjets[lienObjet.idBloque].idBloquant = lienObjet.idBloquant;
               listObjets[lienObjet.idBloque].texteDebloque = lienObjet.texteDebloque;
               getObjetByID(lienObjet.idBloquant);
-              listObjets[listObjets.length - 1].afficherObjet();
             }else{
             }
           });
@@ -160,16 +155,12 @@
       });
 
       function markerOnClick(e) {
-        alert("markerOnClick");
         var clickedMarker = e.target;
         var objet = getObjetByMarker(clickedMarker);
-        alert(clickedMarker.id);
         if (objet.idBloquant == null){
-          alert("1 : recupererObjet");
           objet.recupererObjet();
         }
         else if (objet.idBloquant == objetUtilise){
-          alert("2 : debloquerObjet")
           objet.debloquerObjet(clickedMarker);
         }
       }
@@ -196,6 +187,17 @@
             return listObjets[i];
           }
         }
+      }
+
+      function getCadreObjetUtilise(){
+        var id;
+        for (var i = 0 ; i < listObjetsPossedes.length ; i++){
+          if (objetUtilise == listObjetsPossedes[i].id){
+            id = i;
+          }
+        }
+        var cadreObjetUtilise = document.getElementById("boite"+(id+1));
+        return cadreObjetUtilise;
       }
 
       getObjetByID(0);
