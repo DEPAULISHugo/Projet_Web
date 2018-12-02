@@ -2,7 +2,7 @@
 
 include("objet.class.php");
 include("lienObjet.class.php");
-
+include("codeObjet.class.php");
 
 function getObjetFromDB($id) {
   $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
@@ -37,7 +37,23 @@ function getObjetBloquantFromDB($idBloque) {
   while ($row = pg_fetch_row($result)) {
     $lienObjet = new LienObjet ($row[0], $row[1], $row[2]);
   }
-  return $lienObjet->toString();
+  return $lienObjet;
+}
+
+function getCodeFromDB($idBloque) {
+  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
+  /*if(!$link){
+    die("Erreur de connexion");
+  }else{
+    echo "<p>Connexion établie</p>";
+  }*/
+  $requete = "SELECT idBloque, code, texteDebloque FROM codeobjets WHERE idBloque=".$idBloque;
+  $result = pg_query($link, $requete);
+  $codeObjet = new CodeObjet (-1, -1, null);
+  while ($row = pg_fetch_row($result)) {
+    $codeObjet = new CodeObjet ($row[0], $row[1], $row[2]);
+  }
+  return $codeObjet;
 }
 
 if (isset($_GET['id'])){
@@ -45,6 +61,13 @@ if (isset($_GET['id'])){
 }
 
 if (isset($_GET['idBloque'])){
-  echo getObjetBloquantFromDB($_GET['idBloque']);
+  $newLienObjet = getObjetBloquantFromDB($_GET['idBloque']);
+  if ($newLienObjet->idBloque != -1){
+    /*Il existe un objet bloquant*/
+    echo $newLienObjet->toString();
+  }else {
+    /*Il n'y a pas d'objet bloquant, on cherche donc si l'objet est bloqué par un code*/
+    echo getCodeFromDB($_GET['idBloque'])->toString();
+  }
 }
 ?>

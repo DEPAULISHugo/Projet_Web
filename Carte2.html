@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-markerOnClick
   <head>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
@@ -42,7 +41,7 @@ markerOnClick
 
       for (var i = 0 ; i < 19 ; i++){
         listLayers[i] = new L.LayerGroup();
-        /*carte.addLayer(listLayers[i]);*/
+        carte.addLayer(listLayers[i]);
       }
 
       var listObjets = [];
@@ -73,6 +72,7 @@ markerOnClick
           this.texte = texte;
           this.vu = false;
           this.idBloquant = null;
+          this.code = null;
           this.texteDebloque = null;
           this.iconMap = L.icon({
             iconUrl: this.icone,
@@ -126,17 +126,25 @@ markerOnClick
           objetUtilise = null;
         }
         action() {
-          /*Recherche d'un objet bloquant*/
+          /*Recherche de ce qui pourrait bloquer l'objet : autre objet ou code*/
           var ajax = new XMLHttpRequest();
           ajax.open('GET', 'serveur.php/?idBloque='+this.id);
           ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
           ajax.addEventListener('load',  function () {
-            var lienObjet = JSON.parse(ajax.response);
-            if (lienObjet.idBloquant != -1) {
-              listObjets[lienObjet.idBloque].idBloquant = lienObjet.idBloquant;
-              listObjets[lienObjet.idBloque].texteDebloque = lienObjet.texteDebloque;
-              getObjetByID(lienObjet.idBloquant);
-            }else{
+            var response = JSON.parse(ajax.response);
+            if (response.idBloque != -1) {
+              /*L'objet est bien bloqué par quelque chose*/
+              if (response.type == "objet"){
+                /*L'objet est bloqué par un autre objet*/
+                listObjets[response.idBloque].idBloquant = response.idBloquant;
+                listObjets[response.idBloque].texteDebloque = response.texteDebloque;
+                getObjetByID(response.idBloquant);
+              }
+              else if (response.type == "code"){
+                /*L'objet est bloqué par un code*/
+                listObjets[response.idBloque].code = response.code;
+                listObjets[response.idBloque].texteDebloque = response.texteDebloque;
+              }
             }
           });
           ajax.send("idBloque="+this.id);
@@ -157,11 +165,30 @@ markerOnClick
       function markerOnClick(e) {
         var clickedMarker = e.target;
         var objet = getObjetByMarker(clickedMarker);
-        if (objet.idBloquant == null){
+        if (objet.idBloquant == null && objet.code == null){
+          /*L'objet n'est bloqué ni par un code ni par un objet, on peut donc le récupérer*/
           objet.recupererObjet();
         }
-        else if (objet.idBloquant == objetUtilise){
+        else if (objet.idBloquant != null && objet.idBloquant == objetUtilise){
+          /*L'objet est bloqué, mais on a l'objet pour le débloquer*/
           objet.debloquerObjet(clickedMarker);
+        }
+        else if (objet.code != null){
+          /*L'objet est bloqué par code*/
+          var formulaire = '<input type="text" name="code" id="code'+objet.id+'"><button type="button" value="'+objet.id+'" name="'+objet.id+'" id="valider">Valider</button>';
+          clickedMarker.bindPopup(formulaire).openPopup();
+          var buttonValider = document.getElementById("valider");
+          buttonValider.addEventListener("click", function(){
+            var idObjet = this.value;
+            var objet = listObjets[idObjet];
+            var codeEntre = document.getElementById("code"+idObjet).value;
+            if (codeEntre == objet.code){
+              objet.code = null;
+              objet.marker.bindPopup(objet.texteDebloque).openPopup();
+            }else {
+              markerOnClick(e);
+            }
+          });
         }
       }
 
@@ -178,7 +205,9 @@ markerOnClick
       function markerMouseOut(e) {
         var clickedMarker = e.target;
         var objet = getObjetByMarker(clickedMarker);
-        clickedMarker.closePopup();
+        if (clickedMarker._popup._content.indexOf("<input") == -1){
+          clickedMarker.closePopup();
+        }
       }
 
       function getObjetByMarker(marker){

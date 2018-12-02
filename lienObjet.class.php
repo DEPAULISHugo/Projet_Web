@@ -12,7 +12,7 @@
     }
 
     public function toString(){
-      return '{"idBloque":'.$this->idBloque.', "idBloquant":'.$this->idBloquant.', "texteDebloque":"'.$this->texteDebloque.'"}';
+      return '{"idBloque":'.$this->idBloque.', "idBloquant":'.$this->idBloquant.', "texteDebloque":"'.$this->texteDebloque.'", "type":"objet"}';
     }
 }
 ?>
