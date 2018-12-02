@@ -10,11 +10,13 @@ body{
   text-decoration: underline;
   font-style: italic;
   font-size: 2.5em;
-  margin: 1%;
+  background-color: rgba( 255, 255, 255, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 12%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body p {
@@ -83,9 +85,8 @@ body p {
 }
 
 .score {
-  width: 15%;
-  height: 25%;
-  padding: .2em;
+  margin: 2%;
+  padding: 1%;
   text-align: center;
   font-family: Arial;
   font-size: 1em;
@@ -93,8 +94,8 @@ body p {
   border-radius: 0px 0px 20px 20px;
   background-color: rgba( 255, 255, 255, 0.8);
   position: absolute;
-  top: 7.3%;
-  right: 3%;
+  top: 3.3%;
+  right: 1%;
   display: none;
 }
 

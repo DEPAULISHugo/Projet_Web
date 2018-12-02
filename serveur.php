@@ -5,12 +5,12 @@ include("lienObjet.class.php");
 include("codeObjet.class.php");
 
 function getObjetFromDB($id) {
-  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
-  /*if(!$link){
+  $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
+  if(!$link){
     die("Erreur de connexion");
   }else{
     echo "<p>Connexion établie</p>";
-  }*/
+  }
   $requete = "SELECT * FROM objets WHERE id=".$id;
   $result = pg_query($link, $requete);
   if ($result) {
@@ -25,7 +25,7 @@ function getObjetFromDB($id) {
 }
 
 function getObjetBloquantFromDB($idBloque) {
-  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
+  $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
   /*if(!$link){
     die("Erreur de connexion");
   }else{
@@ -41,7 +41,7 @@ function getObjetBloquantFromDB($idBloque) {
 }
 
 function getCodeFromDB($idBloque) {
-  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
+  $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
   /*if(!$link){
     die("Erreur de connexion");
   }else{
