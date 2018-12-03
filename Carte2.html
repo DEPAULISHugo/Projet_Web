@@ -13,20 +13,6 @@
 
   <body>
 
-    <form name="chrono">
-      <input type="text" name="chrono" id="compteur" value="00:00:00"/>
-      <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
-    </form>
-
-    <div class="barre">
-      <div class="progression">
-        <div class="valeur">
-            Ajouter la valeur de la progression
-        </div>
-      </div>
-    </div>
-
-
     <div id="macarte"></div>
     <script>
       var carte = L.map('macarte').setView([16.165, -61.5], 10);
@@ -234,6 +220,20 @@
       /* FIN MODIFICATION */
 
     </script>
+
+  
+    <form name="chrono">
+      <input type="text" name="chrono" id="compteur" value="00:00:00"/>
+      <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
+    </form>
+
+    <div class="barre">
+      <div class="progression">
+        <div class="valeur">
+            Ajouter la valeur de la progression
+        </div>
+      </div>
+    </div>
 
     <div id="audio">
       <audio id="son" autoplay loop preload="auto">

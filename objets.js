@@ -5,6 +5,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(carte);
 
+//Gestion des objets
 var listLayers = [];
 
 for (var i = 0 ; i < 19 ; i++){
@@ -24,7 +25,6 @@ function getObjetByID(id){
     var objet = JSON.parse(ajax.response);
     var newObjet = new Objet(objet.id, objet.name, objet.latitude, objet.longitude, objet.minZoom, objet.icone, objet.texte);
     listObjets[listObjets.length] = newObjet;
-    console.log(objet);
     newObjet.afficherObjet();
   });
   ajax.send("id="+id);
@@ -41,6 +41,7 @@ class Objet {
     this.texte = texte;
     this.vu = false;
     this.idBloquant = null;
+    this.code = null;
     this.texteDebloque = null;
     this.iconMap = L.icon({
       iconUrl: this.icone,
@@ -50,12 +51,15 @@ class Objet {
       shadowSize:   [50, 50], // size of the shadow
       iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
       shadowAnchor: [25, 25],  // the same for the shadow
-      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+      popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
     });
   this.marker = L.marker([this.lat, this.lng], {icon: this.iconMap});
   }
   afficherObjet(){
+    this.marker.bindPopup(this.texte);
     this.marker.addTo(listLayers[this.minZoom - 1]).on("click", markerOnClick);
+    this.marker.on("mouseover", markerMouseOver);
+    this.marker.on("mouseout", markerMouseOut);
   }
   retirerObjet(){
     listLayers[this.minZoom - 1].removeLayer(this.marker);
@@ -76,38 +80,40 @@ class Objet {
         this.style.backgroundColor = "white";
       }
       else{
-        var id;
-        for (var i = 0 ; i < listObjetsPossedes.length ; i++){
-          if (objetUtilise == listObjetsPossedes[i].id){
-            id = i;
-          }
-        }
-        var ancienCadre = document.getElementById("boite"+(i+1));
-        alert("boite"+(i+1));
+        var ancienCadre = getCadreObjetUtilise();
         ancienCadre.style.backgroundColor = "white";
         objetUtilise = idObjet;
         this.style.backgroundColor = "grey";
       }
-
     });
   }
   debloquerObjet(clickedMarker){
     this.idBloquant = null;
     clickedMarker.bindPopup(this.texteDebloque).openPopup();
+    var cadreObjetUtilise = getCadreObjetUtilise();
+    cadreObjetUtilise.style.backgroundColor = "white";
+    objetUtilise = null;
   }
   action() {
-    /*Recherche d'un objet bloquant*/
+    /*Recherche de ce qui pourrait bloquer l'objet : autre objet ou code*/
     var ajax = new XMLHttpRequest();
     ajax.open('GET', 'serveur.php/?idBloque='+this.id);
     ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     ajax.addEventListener('load',  function () {
-      var lienObjet = JSON.parse(ajax.response);
-      if (lienObjet.idBloquant != -1) {
-        listObjets[lienObjet.idBloque].idBloquant = lienObjet.idBloquant;
-        listObjets[lienObjet.idBloque].texteDebloque = lienObjet.texteDebloque;
-        getObjetByID(lienObjet.idBloquant);
-        listObjets[listObjets.length - 1].afficherObjet();
-      }else{
+      var response = JSON.parse(ajax.response);
+      if (response.idBloque != -1) {
+        /*L'objet est bien bloqué par quelque chose*/
+        if (response.type == "objet"){
+          /*L'objet est bloqué par un autre objet*/
+          listObjets[response.idBloque].idBloquant = response.idBloquant;
+          listObjets[response.idBloque].texteDebloque = response.texteDebloque;
+          getObjetByID(response.idBloquant);
+        }
+        else if (response.type == "code"){
+          /*L'objet est bloqué par un code*/
+          listObjets[response.idBloque].code = response.code;
+          listObjets[response.idBloque].texteDebloque = response.texteDebloque;
+        }
       }
     });
     ajax.send("idBloque="+this.id);
@@ -128,18 +134,48 @@ carte.on('zoomend', function() {
 function markerOnClick(e) {
   var clickedMarker = e.target;
   var objet = getObjetByMarker(clickedMarker);
+  if (objet.idBloquant == null && objet.code == null){
+    /*L'objet n'est bloqué ni par un code ni par un objet, on peut donc le récupérer*/
+    objet.recupererObjet();
+  }
+  else if (objet.idBloquant != null && objet.idBloquant == objetUtilise){
+    /*L'objet est bloqué, mais on a l'objet pour le débloquer*/
+    objet.debloquerObjet(clickedMarker);
+  }
+  else if (objet.code != null){
+    /*L'objet est bloqué par code*/
+    var formulaire = '<input type="text" name="code" id="code'+objet.id+'"><button type="button" value="'+objet.id+'" name="'+objet.id+'" id="valider">Valider</button>';
+    clickedMarker.bindPopup(formulaire).openPopup();
+    var buttonValider = document.getElementById("valider");
+    buttonValider.addEventListener("click", function(){
+      var idObjet = this.value;
+      var objet = listObjets[idObjet];
+      var codeEntre = document.getElementById("code"+idObjet).value;
+      if (codeEntre == objet.code){
+        objet.code = null;
+        objet.marker.bindPopup(objet.texteDebloque).openPopup();
+      }else {
+        markerOnClick(e);
+      }
+    });
+  }
+}
+
+function markerMouseOver(e) {
+  var clickedMarker = e.target;
+  var objet = getObjetByMarker(clickedMarker);
+  clickedMarker.openPopup();
   if (objet.vu == false) {
     objet.vu = true;
-    clickedMarker.bindPopup(objet.texte).openPopup();
     objet.action();
   }
-  else{
-    if (objet.idBloquant == null){
-      objet.recupererObjet();
-    }
-    else if (objet.idBloquant == objetUtilise){
-      objet.debloquerObjet(clickedMarker);
-    }
+}
+
+function markerMouseOut(e) {
+  var clickedMarker = e.target;
+  var objet = getObjetByMarker(clickedMarker);
+  if (clickedMarker._popup._content.indexOf("<input") == -1){
+    clickedMarker.closePopup();
   }
 }
 
@@ -149,6 +185,17 @@ function getObjetByMarker(marker){
       return listObjets[i];
     }
   }
+}
+
+function getCadreObjetUtilise(){
+  var id;
+  for (var i = 0 ; i < listObjetsPossedes.length ; i++){
+    if (objetUtilise == listObjetsPossedes[i].id){
+      id = i;
+    }
+  }
+  var cadreObjetUtilise = document.getElementById("boite"+(id+1));
+  return cadreObjetUtilise;
 }
 
 getObjetByID(0);
