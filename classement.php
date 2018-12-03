@@ -1,30 +1,27 @@
-<?php
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
 
-function getClassement(){
-  $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
+    <?php
+      $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
 
-  if (!$link) {
-    die('Erreur de connexion');
-  } else {
-    echo 'Succès... ';
-  }
+      $requete = "SELECT * FROM classement ORDER BY temps  LIMIT 3";
+      $result = pg_query($link, $requete);
 
-  /**$requete = "SELECT * FROM classement ORDER BY temps  LIMIT 3";
-  $result = pg_query($link, $requete);
-  $classement =
-  if ($result){
-    echo '<ol>';
-    while ($row = pg_fetch_row($result)) {
-      echo $row;
-      //echo '<li>' .$row .'</li>';
+      if ($result){
+        echo '<ol>';
+        while ($row = pg_fetch_row($result)) {
+          echo $row;
+          echo '<li>' .$row .'</li>';
 
-    }
-    //echo '</ol>'
-  }**/
+        }
+        echo '</ol>'
+      }
+     ?>
 
-
-}
-
-
-
- ?>
+  </body>
+</html>
