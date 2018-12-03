@@ -2,25 +2,27 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>HELLO</title>
   </head>
   <body>
 
     <?php
-      $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
-
-      $requete = "SELECT * FROM classement ORDER BY temps  LIMIT 3";
-      $result = pg_query($link, $requete);
-
-      if ($result){
-        echo '<ol>';
-        while ($row = pg_fetch_row($result)) {
-          echo $row;
-          echo '<li>' .$row .'</li>';
-
-        }
-        echo '</ol>'
-      }
+      echo 'HELLO';
+      // $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
+      // echo 'HELLO';
+      // $requete = "SELECT * FROM classement ORDER BY temps  LIMIT 3";
+      // $result = pg_query($link, $requete);
+      // echo §result;
+      //
+      // if ($result){
+      //   echo '<ol>';
+      //   while ($row = pg_fetch_row($result)) {
+      //     echo $row;
+      //     echo '<li>' .$row .'</li>';
+      //
+      //   }
+      //   echo '</ol>'
+      // }
      ?>
 
   </body>

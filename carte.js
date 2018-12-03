@@ -44,10 +44,13 @@ function changeVolume() {
 
 //Evolution de la barre de progression
 function increment(progres) {
-  var evolution = document.getElementsByClassName('progression');
-  var largeur = evolution[0].clientWidth;
+  var evolution = document.getElementsByClassName('progres')[0];
+  var valeur = document.getElementsByClassName('valeur')[0];
+  var largeur = evolution.clientWidth;
   var new_largeur = largeur + progres;
-  evolution[0].style.width = String(new_largeur) + "%";
-  console.log(evolution[0].clientWidth);
+  evolution.style.width = new_largeur.toString() + "%";
+  evolution.style.backgroundColor = 'orange';
+  console.log(evolution.style.backgroundColor);
+  valeur.innerHTML = evolution.style.width;
 };
-increment(15);
+increment(50);
