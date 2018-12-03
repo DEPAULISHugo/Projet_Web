@@ -15,6 +15,8 @@
 
     <div id="macarte"></div>
     <script>
+
+      var pseudo = "HugoTest";
       var carte = L.map('macarte').setView([16.165, -61.5], 10);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -213,6 +215,28 @@
         }
         var cadreObjetUtilise = document.getElementById("boite"+(id+1));
         return cadreObjetUtilise;
+      }
+
+      function finDeJeu(){
+        var time = document.getElementById('compteur').value;
+        time = time.split(":");
+        var minutes = 14 - time[0];
+        var secondes = 60 - time[1];
+        if(secondes < 10){
+          secondes = "0" + secondes;
+        }
+        if(minutes < 10){
+          minutes = "0" + minutes;
+        }
+        var temps = "00:" + minutes + ":" + secondes;
+        var ajax = new XMLHttpRequest();
+        ajax.open('GET', 'serveur.php/?pseudo='+pseudo+'&&temps='+temps);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.addEventListener('load',  function () {
+        });
+        ajax.send('pseudo='+pseudo+'&&temps='+temps);
+        alert("Bravo ! Tu as terminé la Mission Papillon");
+        document.location.href='acceuil.html';
       }
 
       getObjetByID(0);

@@ -56,6 +56,18 @@ function getCodeFromDB($idBloque) {
   return $codeObjet;
 }
 
+function updateScoreFromDB($pseudo, $temps) {
+  $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
+  /*if(!$link){
+    die("Erreur de connexion");
+  }else{
+    echo "<p>Connexion établie</p>";
+  }*/
+  $requete = "INSERT INTO classement (identifiant, temps) VALUES ('".$pseudo."', '".$temps."')";
+  $result = pg_query($link, $requete);
+  return '{"resulat"="Ok"}';
+}
+
 if (isset($_GET['id'])){
   echo getObjetFromDB($_GET['id']);
 }
@@ -70,4 +82,11 @@ if (isset($_GET['idBloque'])){
     echo getCodeFromDB($_GET['idBloque'])->toString();
   }
 }
+
+if (isset($_GET['pseudo']) && isset($_GET['temps'])) {
+  $pseudo = $_GET['pseudo'];
+  $temps = $_GET['temps'];
+  echo updateScoreFromDB($pseudo, $temps);
+}
+
 ?>
