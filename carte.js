@@ -1,5 +1,6 @@
 //Chrono
 var duree = 900;
+var progression = 20;
 
 function t(){
   var secondes = duree;
@@ -46,9 +47,8 @@ function changeVolume() {
 function increment(progres) {
   var evolution = document.getElementsByClassName('progres')[0];
   var valeur = document.getElementsByClassName('valeur')[0];
-  var largeur = evolution.clientWidth;
-  var new_largeur = largeur + progres;
-  evolution.style.width = new_largeur.toString() + "%";
-  valeur.innerHTML = evolution.style.width;
+  progression += progres;
+  evolution.style.width = progression+"%";
+  valeur.innerHTML = progression+" %";
 };
-increment(50);
+increment(10);
