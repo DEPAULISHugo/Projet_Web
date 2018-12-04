@@ -7,22 +7,24 @@
   <body>
 
     <?php
-      echo 'HELLO';
-      // $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres password=postgres");
-      // echo 'HELLO';
-      // $requete = "SELECT * FROM classement ORDER BY temps  LIMIT 3";
-      // $result = pg_query($link, $requete);
-      // echo §result;
-      //
-      // if ($result){
-      //   echo '<ol>';
-      //   while ($row = pg_fetch_row($result)) {
-      //     echo $row;
-      //     echo '<li>' .$row .'</li>';
-      //
-      //   }
-      //   echo '</ol>'
-      // }
+
+      $link = pg_connect("host=localhost port=5433 dbname=projet user=postgres");
+      $requete = "SELECT * FROM classement ORDER BY temps LIMIT 3";
+      $result = pg_query($link, $requete);
+
+      if ($result) {
+         echo "<ol>";
+         while ($row = pg_fetch_row($result)) {
+           echo $row[0];
+           echo '<li>'.$row.'</li>';
+         }
+         echo '</ol>';
+       }
+
+       else {
+         echo 'nul';
+       }
+
      ?>
 
   </body>
