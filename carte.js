@@ -7,8 +7,8 @@ function t(){
   var delai = 0;
 
   if(secondes <0){
-    alert("Le temps imparti est écoulé.")
-    document.location.href='acceuil.html'
+    alert("Le temps imparti est écoulé.");
+    document.location.href='acceuil.html';
   }
   else{
     if(secondes > 59){
@@ -28,9 +28,9 @@ function t(){
 delai = window.setInterval("t()",1000);
 
 function redirection(){
-  var confirmation = confirm('Voulez-vous abandonner la partie en cours ?')
+  var confirmation = confirm('Voulez-vous abandonner la partie en cours ?');
   if (confirmation){
-    document.location.href='acceuil.html'
+    document.location.href='acceuil.html';
   }
 }
 

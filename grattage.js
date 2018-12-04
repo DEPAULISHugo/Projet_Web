@@ -19,6 +19,7 @@ function scratch(element)
   table.style.cursor = "pointer";
 
   var cases = new Array(width);
+  var n = 0;
 
   for(var tr = 0; tr < parseInt(height / casesize) + casesize; tr += casesize)
   {
@@ -62,5 +63,6 @@ function scratch(element)
           }
         }
     }
+
   }
 }
