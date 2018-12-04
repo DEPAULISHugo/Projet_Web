@@ -49,8 +49,6 @@ function increment(progres) {
   var largeur = evolution.clientWidth;
   var new_largeur = largeur + progres;
   evolution.style.width = new_largeur.toString() + "%";
-  evolution.style.backgroundColor = 'orange';
-  console.log(evolution.style.backgroundColor);
   valeur.innerHTML = evolution.style.width;
 };
 increment(50);
