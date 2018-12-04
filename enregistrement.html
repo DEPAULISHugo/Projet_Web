@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Enregistrement</title>
+    <link rel="stylesheet" href="enregistrement.css">
+  </head>
+  <body>
+
+  <form action="#" id="form" method="post" name="form">
+  <h2>Enregistrez-vous</h2>
+  <hr>
+  <input id="name" name="name" placeholder="Pseudonyme" type="text">
+  <a href="javascript:%20check_empty()" id="submit">Validez</a>
+  </form>
+
+  <script type="text/javascript">
+    function check_empty() {
+      if (document.getElementById('name').value == "") {
+        alert("Veuillez renseignez un pseudonyme");
+      }
+      else {
+        window.location.href='carte2.html';
+      }
+    }
+  </script>
+
+  </body>
+</html>

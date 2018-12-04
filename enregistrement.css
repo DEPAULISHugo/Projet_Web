@@ -1,0 +1,49 @@
+body {
+  background-image: url(canalisation.jpg);
+}
+
+form {
+  position:absolute;
+  left:37%;
+  top:35%;
+  width: 20%;
+  padding:10px 50px;
+  border:2px solid rgb(0, 98, 115);
+  font-family:Arial;
+  background-color:white;
+  border-radius:10px;
+}
+
+h2 {
+  background-color:rgb(237, 255, 255);
+  padding:20px 35px;
+  margin:-10px -50px;
+  text-align:center;
+}
+hr {
+  margin:10px -50px;
+  border-top:1px solid rgb(0, 98, 115);
+}
+input[type=text] {
+  width:82%;
+  padding:4%;
+  margin-top:10%;
+  border:1px solid rgb(0, 98, 115);
+  border-radius:10px;
+  padding-left:15%;
+  font-size:16px;
+  font-family:Arial;
+}
+
+#submit {
+text-decoration:none;
+  width:100%;
+  text-align:center;
+  display:block;
+  background-color:orange;
+  color:white;
+  border:1px solid rgb(0, 98, 115);
+  padding:10px 0;
+  font-size:20px;
+  border-radius:5px;
+}

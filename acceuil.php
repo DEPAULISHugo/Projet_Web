@@ -22,21 +22,34 @@
 
     <div>
       <input class="boutons" id="bouton-instruction" type=button onclick=window.location.href='instruction.html'; value=Instructions />
-      <input class="boutons" id="bouton-jouer" type=button onclick=window.location.href='carte.html'; value=Jouer />
+      <input class="boutons" id="bouton-jouer" type=button onclick=window.location.href='enregistrement.html'; value=Jouer />
     </div>
 
     <div>
       <img src="classement.png" alt="image" class="classement">
       <div class="score">
         <h1>Meilleurs <br> scores</h1>
-        <ol>
-          <li>1e</li>
-          <li>2e</li>
-          <li>3e</li>
-        </ol>
+        <table>
+
+          <?php
+            $link = pg_connect("host=localhost port=5432 dbname=projet user=postgres password=postgres");
+
+            $requete = "SELECT * FROM classement ORDER BY temps LIMIT 3";
+            $result = pg_query($link, $requete);
+            echo "<tr>"."<th>"."Identifiant"."</th>"."<th>"."Temps"."</th>"."<tr>";
+            if ($result) {
+               while ($row = pg_fetch_row($result)) {
+                 echo "<tr>";
+                 echo '<td>'.$row[0].'</td>';
+                 echo "<td>".$row[1]."</td>";
+                 echo "</tr>";
+               }
+             }
+          ?>
+
+        </table>
       </div>
     </div>
-
 
   </body>
 </html>
