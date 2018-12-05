@@ -65,6 +65,20 @@ class Objet {
     listLayers[this.minZoom - 1].removeLayer(this.marker);
   }
   recupererObjet(){
+    increment(10);
+    this.retirerObjet();
+    if (this.id == 0){
+      getObjetByID(2);
+      this.icone = "code1.png";
+    }
+    else if (this.id == 2){
+      getObjetByID(4);
+      this.icone = "code2.png";
+    }
+    else if (this.id == 4){
+      getObjetByID(6);
+      this.icone = "carte.png";
+    }
     this.retirerObjet();
     listObjetsPossedes[listObjetsPossedes.length] = this;
     var cadre = document.getElementById("boite"+listObjetsPossedes.length);
@@ -73,7 +87,7 @@ class Objet {
       var idObjet = listObjetsPossedes[this.id.charAt(5) - 1].id;
       if (objetUtilise == null){
         objetUtilise = idObjet;
-        this.style.backgroundColor = "grey";
+        this.style.backgroundColor = "rgb(0, 98, 115)";
       }
       else if (objetUtilise == idObjet){
         objetUtilise = null;
@@ -83,9 +97,12 @@ class Objet {
         var ancienCadre = getCadreObjetUtilise();
         ancienCadre.style.backgroundColor = "white";
         objetUtilise = idObjet;
-        this.style.backgroundColor = "grey";
+        this.style.backgroundColor = "rgb(0, 98, 115)";
       }
     });
+    if (this.id == 6){
+       finDeJeu();
+    }
   }
   debloquerObjet(clickedMarker){
     this.idBloquant = null;
@@ -196,6 +213,28 @@ function getCadreObjetUtilise(){
   }
   var cadreObjetUtilise = document.getElementById("boite"+(id+1));
   return cadreObjetUtilise;
+}
+
+function finDeJeu(){
+  var time = document.getElementById('compteur').value;
+  time = time.split(":");
+  var minutes = 14 - time[0];
+  var secondes = 60 - time[1];
+  if(secondes < 10){
+    secondes = "0" + secondes;
+  }
+  if(minutes < 10){
+    minutes = "0" + minutes;
+  }
+  var temps = "00:" + minutes + ":" + secondes;
+  var ajax = new XMLHttpRequest();
+  ajax.open('GET', 'serveur.php/?pseudo='+pseudo+'&&temps='+temps);
+  ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  ajax.addEventListener('load',  function () {
+  });
+  ajax.send('pseudo='+pseudo+'&&temps='+temps);
+  alert("Bravo ! Tu as terminé la Mission Papillon !");
+  document.location.href='acceuil.html';
 }
 
 getObjetByID(0);

@@ -14,5 +14,5 @@ $db=pg_connect("host=localhost port=5432 user=postgres password=postgres");
 if (pg_query("CREATE DATABASE projet")){
   executeQueryFile("bddProjet.sql");
 }
-echo '{"resulat"="Ok"}';
+echo '{"resulat":"Ok"}';
  ?>

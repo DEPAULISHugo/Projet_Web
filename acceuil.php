@@ -51,5 +51,25 @@
       </div>
     </div>
 
+    <div id="chargement">
+      <h3>Chargement de la base de données...</h3>
+    </div>
+
+
+    <script type="text/javascript">
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', 'initBDD.php');
+    ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    ajax.addEventListener('load',  function () {
+      var response = JSON.parse(ajax.response);
+      if (response.resultat == "Ok"){
+        document.getElementById("chargement").innerHTML = "<h3>Base de données chargée</h3>";
+        alert("Base de données chargée");
+      }
+
+    });
+    ajax.send("");
+    </script>
+
   </body>
 </html>

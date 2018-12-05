@@ -9,7 +9,7 @@ function t(){
 
   if(secondes <0){
     alert("Le temps imparti est écoulé.");
-    document.location.href='acceuil.html';
+    document.location.href='acceuil.php';
   }
   else{
     if(secondes > 59){
@@ -31,7 +31,7 @@ delai = window.setInterval("t()",1000);
 function redirection(){
   var confirmation = confirm('Voulez-vous abandonner la partie en cours ?');
   if (confirmation){
-    document.location.href='acceuil.html';
+    document.location.href='acceuil.php';
   }
 }
 
