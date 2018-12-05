@@ -62,11 +62,8 @@
     ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     ajax.addEventListener('load',  function () {
       var response = JSON.parse(ajax.response);
-      alert(response.resultat);
       if (response.resultat == "Ok"){
-        alert("Base chargée");
         var charg = document.getElementById("chargement");
-        alert(charg.innerHTML);
         charg.innerHTML = "<h3>Base de données chargée</h3>";
       }
 

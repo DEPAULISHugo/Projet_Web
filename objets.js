@@ -16,6 +16,7 @@ for (var i = 0 ; i < 19 ; i++){
 var listObjets = [];
 var listObjetsPossedes = [];
 var objetUtilise = null;
+var pseudo = window.location.search.split("=")[1];
 
 function getObjetByID(id){
   var ajax = new XMLHttpRequest();
@@ -234,7 +235,7 @@ function finDeJeu(){
   });
   ajax.send('pseudo='+pseudo+'&&temps='+temps);
   alert("Bravo ! Tu as terminé la Mission Papillon !");
-  document.location.href='acceuil.html';
+  document.location.href='acceuil.php';
 }
 
 getObjetByID(0);

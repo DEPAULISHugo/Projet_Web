@@ -20,7 +20,8 @@
         alert("Veuillez renseignez un pseudonyme");
       }
       else {
-        window.location.href='carte.html';
+        var pseudo = document.getElementById('name').value;
+        window.location.href='Carte.php?pseudo='+pseudo;
       }
     }
   </script>
