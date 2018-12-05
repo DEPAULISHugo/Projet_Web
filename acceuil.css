@@ -8,9 +8,10 @@ body{
 #histoire h1 {
   font-family: Arial;
   text-decoration: underline;
+  color: rgb( 255, 187, 0);
   font-style: italic;
   font-size: 2.5em;
-  background-color: rgba( 255, 255, 255, 0.4);
+  font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,12 +57,12 @@ body p {
 .boutons:hover,
 .boutons:focus {
   padding: 10px;
-  background-color: #FF00FF;
-  border: 4px solid #9932CC;
+  background-color: rgb( 255, 187, 0);
+  border: 4px solid rgb( 212, 0, 0);
   border-radius: 24px;
-  box-shadow: 5px 5px 4px #9932CC,
-              5px 5px 4px #9932CC,
-              5px 5px 4px #9932CC;
+  box-shadow: 5px 5px 4px rgb( 212, 0, 0),
+              5px 5px 4px rgb( 212, 0, 0),
+              5px 5px 4px rgb( 212, 0, 0);
 }
 
 .boutons:active {
@@ -105,4 +106,11 @@ body p {
 }
 .classement:hover ~ .score{
   display: block;
+}
+
+#chargement {
+  color: white;
+  position: absolute;
+  bottom: 5%;
+  left: 42%;
 }
