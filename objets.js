@@ -10,9 +10,9 @@ var listLayers = [];
 
 for (var i = 0 ; i < 19 ; i++){
   listLayers[i] = new L.LayerGroup();
-  carte.addLayer(listLayers[i]);
+  /*carte.addLayer(listLayers[i]);*/
 }
-
+carte.addLayer(listLayers[0]);
 var listObjets = [];
 var listObjetsPossedes = [];
 var objetUtilise = null;
