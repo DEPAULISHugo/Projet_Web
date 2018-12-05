@@ -109,8 +109,12 @@ body p {
 }
 
 #chargement {
-  color: white;
+  color: #002060;
   position: absolute;
   bottom: 5%;
   left: 42%;
+  padding: .5%;
+  border: 3px solid #002060;
+  background-color: rgba( 255, 255, 255, 0.8);
+  border-radius: 20px;
 }
