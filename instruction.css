@@ -5,21 +5,19 @@ body{
   height: 100%;
 }
 
-body p {
+#cadre {
   font-family: Arial;
   font-size: 1em;
   font-style: italic;
-  width: 49%;
-  height: 16%;
-  padding: 1%;
+  margin: 1%;
+  width: 75%;
+  height: auto;
   background-color: rgba( 255, 255, 255, 0.8);
-  border-style: solid;
-  border-radius: 20px 0px 20px 0px;
-  border-color: #0033cc;
-  border-width: 8px;
+  border: 8px solid #0033cc;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  position: absolute;
+  top: 10%;
+  left: 10%;
 }
 
 .boutons {
@@ -58,8 +56,16 @@ body p {
     border: 1px solid black;
 }
 
+#bouton-retour{
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
 #bouton-jouer{
-  margin-left: 40%
+  position: absolute;
+  top: 90%;
+  left: 40%;
 }
 
 #Volume {
@@ -74,4 +80,57 @@ body p {
   background-image: url(stop.png);
   background-size: cover;
   border-radius: 100%;
+}
+
+#demo{
+  width: 100%;
+  height: 100%;
+}
+
+.infobulle{
+    position: absolute;
+    visibility : hidden;
+    border: 1px solid #0033cc;
+    padding: 10px;
+    font-family: Arial;
+    color: #0033cc;
+    font-size: 10px;
+    background-color: white;
+}
+
+.bulle{
+  width: 2%;
+  height: 4%;
+  background-color: white;
+  border-radius: 50%;
+}
+
+#bulleChrono {
+  position: absolute;
+  top: 13.25%;
+  left: 13%;
+}
+
+#bulleProgression {
+  position: absolute;
+  top: 13.25%;
+  left: 39.25%;
+}
+
+#bulleSon {
+  position: absolute;
+  top: 13.25%;
+  left: 73%;
+}
+
+#bulleRecuperable{
+  position: absolute;
+  top: 33%;
+  left: 49.75%;
+}
+
+#bulleObjet{
+  position: absolute;
+  bottom: 17.5%;
+  left: 16%;
 }

@@ -9,19 +9,24 @@
 
   <input class="boutons" id="bouton-retour" type=button onclick=window.location.href='acceuil.php'; value=Retour />
 
-  <p>
+  <div id='cadre'>
+    <video id="demo" src="demo.mp4" autoplay loop>Video non disponible</video>
+  </div>
 
-    <input type="range" min="0" max="1" step="0.1" value="1" id="volume" onchange="changeVolume()">
-    Cette barre vous permettre de regler le volume du son pendant la partie
-    <br>
-    <input id="stop" type=button onclick="redirection(), chronoStop()"; value="" />
-    Ce bouton vous permet de quitter la partie
-    <br>
+  <div id="curseur" class="infobulle"></div>
+    <img src="aide.png" alt="Info" class="bulle" id="bulleChrono" onmouseover="montre('Compte à rebours vous informant du temps restant');" onmouseout="cache();">
 
-  </p>
+    <img src="aide.png" alt="Info" class="bulle" id="bulleProgression" onmouseover="montre('Barre de progression montrant votre avancé dans la résolution de énigmes');" onmouseout="cache();">
+
+    <img src="aide.png" alt="Info" class="bulle" id="bulleSon" onmouseover="montre('Outil de reglage du volume du son');" onmouseout="cache();">
+
+    <img src="aide.png" alt="Info" class="bulle" id="bulleRecuperable" onmouseover="montre('Afin de recuperer un objet recuperable, il suffit de cliquer dessus');" onmouseout="cache();">
+
+    <img src="aide.png" alt="Info" class="bulle"id="bulleObjet" onmouseover="montre('Afin d\'utiliser un obet déjà récupéré, cliquez sur lui pour l\'activer. <br> Pour le desactiver re-cliquez sur lui');" onmouseout="cache();">
 
   <input class="boutons" id="bouton-jouer" type=button onclick=window.location.href='carte.html'; value=Jouer />
 
+  <script src="infoBulle.js" charset="utf-8"></script>
   </body>
 
 </html>
